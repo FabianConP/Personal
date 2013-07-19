@@ -1,73 +1,76 @@
 package _5604_un;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class _5046_Gholams_Simple_Game {
 	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		String line = "";
+		Scanner in = new Scanner(System.in);
 		StringBuilder out = new StringBuilder();
-		do {
-			line = in.readLine();
-			if (line == null || line.length() == 0)
-				break;
-			int times = Integer.parseInt(line);
+		while (in.hasNext()) {
+			int times = in.nextInt();
 			for (int i = 0; i < times; i++) {
-				int[] ss = retInts(in.readLine());
-				int size = ss[0];
+				int size = in.nextInt();
+				int steps = in.nextInt();
 				boolean[] tiles = new boolean[size];
-				int[] v = retInts(in.readLine());
 				int l = -1, r = -1;
 				for (int j = 0; j < size; j++) {
-					switch (v[j]) {
-					case 1:
+					int n = in.nextInt();
+					if (n == 0)
 						tiles[j] = true;
-						break;
-					case 2:
+					else if (n == 2)
 						r = j;
-						break;
-					case 3:
+					else if (n == 3)
 						l = j;
-						break;
-					}
 				}
 				long touch = 0;
-				int cur = (r != -1) ? r : l;
+				int cur = 0;
 				if (r != -1)
-					while (ss[1] > 0) {
-						for (int k = 1 + cur; k < size && ss[1] > 0; k++) {
+					if (r == size - 1) {
+						l = r;
+						r = -1;
+					} else
+						cur = r;
+				else {
+					if (l == 0) {
+						r = l;
+						l = -1;
+					} else
+						cur = l;
+				}
+				boolean s = true;
+				if (r != -1)
+					while (steps > 0) {
+						for (int k = s ? 1 + cur : 1; k < size && steps > 0; k++) {
 							if (tiles[k])
 								touch++;
-							ss[1]--;
-							cur++;
+							steps--;
 						}
-						for (int k = cur - 1; k >= 0 && ss[1] > 0; k--) {
+						s = false;
+						for (int k = size - 2; k >= 0 && steps > 0; k--) {
 							if (tiles[k])
 								touch++;
-							ss[1]--;
-							cur--;
+							steps--;
 						}
 					}
 				else
-					while (ss[1] > 0) {
-						for (int k = cur - 1; k >= 0 && ss[1] > 0; k--) {
+					while (steps > 0) {
+						for (int k = s ? cur - 1 : size - 2; k >= 0
+								&& steps > 0; k--) {
 							if (tiles[k])
 								touch++;
-							ss[1]--;
-							cur--;
+							steps--;
 						}
-						for (int k = 1 + cur; k < size && ss[1] > 0; k++) {
+						s = false;
+						for (int k = 1; k < size && steps > 0; k++) {
 							if (tiles[k])
 								touch++;
-							ss[1]--;
-							cur++;
+							steps--;
 						}
 					}
 				out.append(touch + "\n");
 			}
-		} while (line.length() != 0 && line != null);
+		}
 		System.out.print(out);
 	}
 
