@@ -44,7 +44,7 @@ public class _4379_iSharp {
 		return line.replaceAll("[^\\[\\]*&]", "");
 	}
 }
-class Var implements Comparable<Var> {
+class Var {
 	String type, name;
 
 	public Var(String type, String name) {
@@ -52,24 +52,12 @@ class Var implements Comparable<Var> {
 		this.name = name;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		String var = "";
 		var += type;
 			var += " "+name;
 		return var+";";
-	}
-
-
-
-
-	@Override
-	public int compareTo(Var o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
