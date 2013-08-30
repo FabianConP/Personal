@@ -1,4 +1,5 @@
 package uva;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,19 +19,20 @@ public class _10464_Big_Big_Real_Numbers {
 			int times = Integer.parseInt(line);
 			for (int i = 0; i < times; i++) {
 				line = " " + in.readLine().replaceAll(" ", "  ") + " ";
-				line = line.replaceAll(" \\.", "0.").replaceAll(" -\\.", "-0.").replaceAll("\\. ", ".0").replaceAll("  ", " ");
+				line = line.replaceAll(" \\.", "0.").replaceAll(" -\\.", "-0.")
+						.replaceAll("\\. ", ".0").replaceAll("  ", " ");
 				w = line.trim().split(" ");
 				a = new BigDecimal(w[0]);
 				b = new BigDecimal(w[1]);
 				String ans = a.add(b).toPlainString();
 				char[] sum = ans.toCharArray();
-				int index = sum.length-1;
-				for (; index >=1; index--)
-					if(sum[index]=='0' && sum[index-1]=='.')
+				int index = sum.length - 1;
+				for (; index >= 1; index--)
+					if (sum[index] == '0' && sum[index - 1] == '.')
 						break;
-					else if(sum[index]!='0')
+					else if (sum[index] != '0')
 						break;
-				out.append(ans.substring(0, index+1) + "\n");
+				out.append(ans.substring(0, index + 1) + "\n");
 			}
 		} while (line != null && line.length() != 0);
 		System.out.print(out);
