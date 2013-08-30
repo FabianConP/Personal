@@ -37,12 +37,4 @@ public class _10464_Big_Big_Real_Numbers {
 		} while (line != null && line.length() != 0);
 		System.out.print(out);
 	}
-
-	public static double[] retDoubles(String line) {
-		String[] w = line.trim().split(" ");
-		double[] a = new double[w.length];
-		for (int i = 0; i < w.length; i++)
-			a[i] = Double.parseDouble(w[i].trim());
-		return a;
-	}
 }
