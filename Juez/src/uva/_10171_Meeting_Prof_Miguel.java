@@ -102,12 +102,10 @@ public class _10171_Meeting_Prof_Miguel {
 }
 class Floyd {
 	public static int d[][];
-	public static int padres[][];
 	public static final int INF = (Integer.MAX_VALUE - 1) / 2;
 
 	public void inint(int n) {
 		d = new int[n][n];
-		padres = new int[n][n];
 		for (int i = 0; i < n; i++)
 			for (int k = 0; k < n; k++)
 				if (i != k)
@@ -115,20 +113,11 @@ class Floyd {
 	}
 
 	void floyd(int rows) {
-
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < rows; j++) {
-				padres[i][j] = i;
-				if (d[i][j] == INF || i == j)
-					padres[i][j] = -1;
-			}
-		}
 		for (int k = 0; k < rows; k++)
 			for (int i = 0; i < rows; i++)
 				for (int j = 0; j < rows; j++)
 					if (d[i][j] > d[i][k] + d[k][j]) {
 						d[i][j] = d[i][k] + d[k][j];
-						padres[i][j] = padres[k][j];
 					}
 	}
 	
@@ -150,12 +139,10 @@ class Floyd {
 
 class Floyd2 {
 	public static int d[][];
-	public static int padres[][];
 	public static final int INF = (Integer.MAX_VALUE - 1) / 2;
 
 	public void inint(int n) {
 		d = new int[n][n];
-		padres = new int[n][n];
 		for (int i = 0; i < n; i++)
 			for (int k = 0; k < n; k++)
 				if (i != k)
@@ -163,20 +150,11 @@ class Floyd2 {
 	}
 
 	void floyd(int rows) {
-
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < rows; j++) {
-				padres[i][j] = i;
-				if (d[i][j] == INF || i == j)
-					padres[i][j] = -1;
-			}
-		}
 		for (int k = 0; k < rows; k++)
 			for (int i = 0; i < rows; i++)
 				for (int j = 0; j < rows; j++)
 					if (d[i][j] > d[i][k] + d[k][j]) {
 						d[i][j] = d[i][k] + d[k][j];
-						padres[i][j] = padres[k][j];
 					}
 	}
 	
