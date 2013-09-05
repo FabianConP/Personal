@@ -77,7 +77,7 @@ public class _10171_Meeting_Prof_Miguel {
 				if(im[0].trim().equals(im[1].trim()))
 					out.append("0 "+im[0]).append("\n");
 				else
-					out.append("You will never meet.").append("\n");
+					out.append("You will never meet.\n").append("\n");
 			}else{
 				out.append(minPath+" ");
 				Collections.sort(difEndCity);
