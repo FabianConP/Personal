@@ -2,78 +2,60 @@ package uva;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 public class _10309_Turn_the_Lights_Off {
 
-	public static int on;
-	public static int min, pos;
-	public static boolean[][] vis, m, m2;
+	public static int initialAmountOn;
+	public static int minSteps;
+	public static int[] m, m2;
 
-	public static void back(int steps, int curOn, int col) {
+	public static void back(int steps, int amountOn, int col) {
 		int aux = 0;
 		for (int i = col; i < 10; i++) {
-			aux = change(0, i);
-			m[0][i] = !m[0][i];
-			rest(steps+1, curOn+aux);
-			if(col+1<11) back(steps + 1, curOn + aux, i+1);
-			change(0, i);
-			m[0][i] = !m[0][i];
+			aux = change(0, i, m);
+			m[0] ^= 1 << i;
+			count(steps + 1, amountOn + aux);
+			if (col + 1 < 11)
+				back(steps + 1, amountOn + aux, i + 1);
+			change(0, i, m);
+			m[0] ^= 1 << i;
 		}
 	}
 
-	public static void copyM() {
+	public static void copyMatrix() {
 		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-				m2[i][j] = m[i][j];
+			m2[i] = m[i];
 	}
 
-	public static void rest(int step, int curOn) {
-		copyM();
-		for (int row = 1; row < 10; row++) 
-			for (int col = 0; col < 10; col++) 
-				if (m2[row - 1][col]) {
-					curOn--;
-					curOn+=change2(row, col);
+	public static void count(int step, int amountOn) {
+		copyMatrix();
+		for (int row = 1; row < 10; row++)
+			for (int col = 0; col < 10; col++)
+				if ((m2[row - 1] & (1 << col)) != 0) {
+					amountOn--;
+					amountOn += change(row, col, m2);
 					step++;
-					m2[row][col] = !m2[row][col];
-					m2[row-1][col] = !m2[row-1][col];
+					m2[row] ^= 1 << col;
+					m2[row - 1] ^= 1 << col;
 				}
-		if (curOn == 0 && step <= 100)
-			if(min>step)
-				min = step;
+		if (amountOn == 0 && step <= 100)
+			if (minSteps > step)
+				minSteps = step;
 	}
 
-	public static int change(int row, int col) {
-		int c = (m[row][col] ? -1 : 1);
+	public static int change(int row, int col, int[] mm) {
+		int c = ((mm[row] & (1 << col)) != 0 ? -1 : 1);
 		if (col - 1 >= 0) {
-			c += (m[row][col - 1] ? -1 : 1);
-			m[row][col - 1] = !m[row][col - 1];
+			c += ((mm[row] & (1 << (col - 1))) != 0 ? -1 : 1);
+			mm[row] ^= 1 << (col - 1);
 		}
 		if (col + 1 < 10) {
-			c += (m[row][col + 1] ? -1 : 1);
-			m[row][col + 1] = !m[row][col + 1];
+			c += ((mm[row] & (1 << (col + 1))) != 0 ? -1 : 1);
+			mm[row] ^= 1 << (col + 1);
 		}
 		if (row + 1 < 10) {
-			c += (m[row + 1][col] ? -1 : 1);
-			m[row + 1][col] = !m[row + 1][col];
-		}
-		return c;
-	}
-
-	public static int change2(int row, int col) {
-		int c = (m2[row][col] ? -1 : 1);
-		if (col - 1 >= 0) {
-			c += (m2[row][col - 1] ? -1 : 1);
-			m2[row][col - 1] = !m2[row][col - 1];
-		}
-		if (col + 1 < 10) {
-			c += (m2[row][col + 1] ? -1 : 1);
-			m2[row][col + 1] = !m2[row][col + 1];
-		}
-		if (row + 1 < 10) {
-			c += (m2[row + 1][col] ? -1 : 1);
-			m2[row + 1][col] = !m2[row + 1][col];
+			c += ((mm[row + 1] & (1 << col)) != 0 ? -1 : 1);
+			mm[row + 1] ^= 1 << col;
 		}
 		return c;
 	}
@@ -82,33 +64,30 @@ public class _10309_Turn_the_Lights_Off {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line = "";
 		StringBuilder out = new StringBuilder();
-		m = new boolean[10][10];
-		m2 = new boolean[10][10];
-		vis = new boolean[10][10];
+		m = new int[10];
+		m2 = new int[10];
 		while ((line = in.readLine()) != null && line.length() != 0) {
 			if (line.trim().equals("end"))
 				break;
 			String name = line;
-			on = 0;
+			initialAmountOn = 0;
 			for (int i = 0; i < 10; i++) {
 				line = in.readLine();
-				Arrays.fill(m[i], false);
-				Arrays.fill(vis[i], false);
+				m[i] = 0;
 				for (int j = 0; j < 10; j++)
 					if (line.charAt(j) == 'O') {
-						m[i][j] = true;
-						on++;
+						m[i] |= 1 << j;
+						initialAmountOn++;
 					}
 			}
-			min = Integer.MAX_VALUE;
-			pos = 0;
-			rest(0, on);
-			back(0, on, 0);
+			minSteps = Integer.MAX_VALUE;
+			count(0, initialAmountOn);
+			back(0, initialAmountOn, 0);
 			out.append(name + " ");
-			if (min == Integer.MAX_VALUE)
+			if (minSteps == Integer.MAX_VALUE)
 				out.append("-1\n");
 			else
-				out.append(min + "\n");
+				out.append(minSteps + "\n");
 		}
 		System.out.print(out);
 	}
