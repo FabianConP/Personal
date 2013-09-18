@@ -1,4 +1,5 @@
 package uva;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +18,8 @@ public class _10341_Solve_It {
 		while ((line = in.readLine()) != null && line.length() != 0) {
 			v = retDoubles(line);
 			if ((f(v, 0) * f(v, 1)) <= 0)
-				out.append(String.format(Locale.US, "%.4f", netwonMethod())+"\n");
+				out.append(String.format(Locale.US, "%.4f", NetwonRaphson())
+						+ "\n");
 			else
 				out.append("No solution\n");
 		}
@@ -33,27 +35,25 @@ public class _10341_Solve_It {
 	}
 
 	public static double f(double[] v, double x) {
-		return 1.0 * v[0] * Math.pow(E, -x) + 1.0 * v[1] * Math.sin(x) + 1.0
-				* v[2] * Math.cos(x) + 1.0 * v[3] * Math.tan(x) + 1.0 * v[4]
-				* x * x + 1.0 * v[5];
+		return v[0] * Math.pow(E, -x) + v[1] * Math.sin(x) + v[2] * Math.cos(x)
+				+ v[3] * Math.tan(x) + v[4] * x * x + v[5];
 	}
 
 	public static double ff(double[] v, double x) {
-		return 1.0 * (-v[0]) * Math.pow(E, -x) + 1.0 * v[1] * Math.cos(x)
-				- v[2] * Math.sin(x) * 1.0 + 1.0
-				* (v[3] * (1 / Math.cos(x)) * (1 / Math.cos(x))) + 2.0 * v[4]
-				* x;
+		return (-v[0]) * Math.pow(E, -x) + v[1] * Math.cos(x) - v[2]
+				* Math.sin(x) + (v[3] * (1 / Math.cos(x)) * (1 / Math.cos(x)))
+				+ 2.0 * v[4] * x;
 	}
 
-	static double netwonMethod() {
+	static double NetwonRaphson() {
 		if (f(v, 0) == 0)
 			return 0;
-		double ans = 0.5;
+		double xn = 0.5, x = 0;
 		while (true) {
-			double newans = ans - f(v, ans) / ff(v, ans);
-			if (Math.abs(newans - ans) < EPS)
-				return ans;
-			ans = newans;
+			x = xn - f(v, xn) / ff(v, xn);
+			if (Math.abs(x - xn) < EPS)
+				return xn;
+			xn = x;
 		}
 	}
 }
