@@ -42,7 +42,7 @@ public class _32_A_Needle_in_the_Haystack {
 
 			fallas[i] = pos + 1;
 		}
-
+		System.out.println(Arrays.toString(fallas));
 		// cp = pocision cadena, pp = pocision patron
 		for (int cp = 0, pp = 0; cp < cadena.length(); cp++) {
 			while (pp != -1
