@@ -1,35 +1,28 @@
 package live;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class _2557_The_Drunk_Jailer {
 
-	public static boolean[] jail;
-	public static int[] ans;
-
-	public static void memo() {
-		jail = new boolean[101];
-		ans = new int[101];
-		for (int i = 1; i < jail.length; i++) {
-			if (!jail[i])
-				ans[i]++;
-			for (int j = 0; j < jail.length; j += i)
-				jail[j] = !jail[j];
-			ans[i] += ans[i - 1];
-		}
-	}
+	public static final int[] ANS = { 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 };
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line = "";
 		StringBuilder out = new StringBuilder();
-		memo();
 		while ((line = in.readLine()) != null && line.length() != 0) {
-			int size = Integer.parseInt(line), n = 0;
+			int size = Integer.parseInt(line), n = 0, ans = 0;
 			for (int i = 0; i < size; i++) {
 				n = Integer.parseInt(in.readLine().trim());
-				out.append(ans[n] + "\n");
+				ans = 0;
+				for (int j = 0; j < ANS.length; j++)
+					if (n >= ANS[j])
+						ans++;
+					else
+						break;
+				out.append(ans + "\n");
 			}
 		}
 		System.out.print(out);
