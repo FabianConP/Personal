@@ -4,45 +4,49 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class _10066_The_Twin_Towers {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String line = "";
+		StringBuilder out = new StringBuilder();
+		int t = 1;
+		while ((line = in.readLine()) != null && line.length() != 0) {
+			int[] ab = readInts(line);
+			if (ab[0] == 0 && ab[1] == 0)
+				break;
+			int ans = 0;
+			int[] a = readInts(in.readLine());
+			int[] b = readInts(in.readLine());
+			if (a.length > b.length)
+				ans = LCS(a, b);
+			else
+				ans = LCS(b, a);
+			out.append("Twin Towers #" + t++ + "\nNumber of Tiles : " + ans
+					+ "\n\n");
 
-	public static int[][] dp;//Matrix X x Y
-	
-	//Size of LCS	
-	public static void lcs(String[] x, String[] y) {
+		}
+		System.out.print(out);
+	}
+
+	public static int LCS(int[] x, int[] y) {
+		int[][] dp = new int[x.length + 1][y.length + 1];
 		int n = x.length;
 		int m = y.length;
 		for (int i = 0; i < n + 1; i++)
 			for (int j = 0; j < m + 1; j++)
 				if (i == 0 || j == 0)
 					dp[i][j] = 0;
-				else if (x[i - 1].equals(y[j - 1]))
+				else if (x[i - 1] == y[j - 1])
 					dp[i][j] = dp[i - 1][j - 1] + 1;
 				else
 					dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+		return dp[x.length][y.length];
 	}
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String line = "";
-		StringBuilder sb = new StringBuilder();
-		int t = 1;
-		d: do {
-			line = br.readLine();
-			if (line == null || line.length() == 0)
-				break d;
-			String[] nums = line.split(" ");
-			int n1 = Integer.parseInt(nums[0]);
-			int n2 = Integer.parseInt(nums[1]);
-			if(n1==0 && n2==0)
-				break d;
-			String[] a1 = br.readLine().split(" ");
-			String[] a2 = br.readLine().split(" ");
-			dp = new int[a1.length+ 1][a2.length + 1];//Size of matrix
-			lcs(a1, a2);
-			sb.append("Twin Towers #").append(t++).append("\n");
-			sb.append("Number of Tiles : ").append(dp[a1.length][a2.length]).append("\n\n");
-		} while (line != null && line.length() != 0);
-		System.out.print(sb);
+
+	public static int[] readInts(String line) {
+		String[] w = line.trim().split(" ");
+		int[] a = new int[w.length];
+		for (int i = 0; i < w.length; i++)
+			a[i] = Integer.parseInt(w[i].trim());
+		return a;
 	}
 }
-
