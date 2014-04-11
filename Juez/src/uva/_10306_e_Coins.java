@@ -1,4 +1,5 @@
 package uva;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ public class _10306_e_Coins {
 					Arrays.fill(minCoin[j], 1 << 15);
 				s *= s;
 				Coin[] c = new Coin[m];
-				for (int j = 0; j < c.length; j++) 
+				for (int j = 0; j < c.length; j++)
 					c[j] = new Coin(in.nextInt(), in.nextInt(), 1);
 				Queue<Coin> q = new LinkedList<Coin>();
 				q.add(new Coin(0, 0, 0));
@@ -26,7 +27,7 @@ public class _10306_e_Coins {
 				int minCoins = Integer.MAX_VALUE;
 				while (!q.isEmpty()) {
 					cur = q.poll();
-					for (int j = 0; j < c.length; j++) {
+					for (int j = 0; j < c.length; j++)
 						if (s(cur.c + c[j].c, cur.t + c[j].t) <= s
 								&& minCoin[cur.c + c[j].c][cur.t + c[j].t] > cur.n + 1) {
 							minCoin[cur.c + c[j].c][cur.t + c[j].t] = cur.n + 1;
@@ -36,7 +37,6 @@ public class _10306_e_Coins {
 								q.add(new Coin(cur.c + c[j].c, cur.t + c[j].t,
 										cur.n + 1));
 						}
-					}
 				}
 				if (minCoins == Integer.MAX_VALUE)
 					out.append("not possible\n");
@@ -48,16 +48,8 @@ public class _10306_e_Coins {
 		System.out.print(out);
 	}
 
-	public static int[] readInts(String line) {
-		String[] w = line.trim().split(" ");
-		int[] a = new int[w.length];
-		for (int i = 0; i < w.length; i++)
-			a[i] = Integer.parseInt(w[i].trim());
-		return a;
-	}
-
-	public static int s(int a, int b) {
-		return a * a + b * b;
+	public static int s(int c, int t) {
+		return c * c + t * t;
 	}
 
 	static class Coin {
