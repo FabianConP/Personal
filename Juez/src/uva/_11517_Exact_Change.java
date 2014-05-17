@@ -11,33 +11,20 @@ import java.util.Arrays;
 public class _11517_Exact_Change {
 	public static int V[], INF = Integer.MAX_VALUE / 2;
 
-	public static int[][] minCost;
+	public static int[] minCost;
 
 	public static int fillMinCost(int size, int amount) {
-		minCost = new int[V.length][size + 1];
-		for (int i = 0; i < minCost.length; i++)
-			Arrays.fill(minCost[i], INF);
-		int index = INF;
-		for (int i = 0; i < V.length; i++) {
-			if (i == 0) {
-				minCost[0][0] = 0;
-				minCost[0][V[i]] = 1;
-				if (V[i] >= amount)
-					index = V[i];
-			} else
-				for (int j = 0; j <= size && j <= index; j++) {
-					if (j - V[i] >= 0 && minCost[i - 1][j - V[i]]!=INF) {
-						minCost[i][j] = min(minCost[i - 1][j], minCost[i - 1][j
-								- V[i]] + 1, minCost[i][j]);
-					} else 
-						minCost[i][j] = minCost[i - 1][j];
-					if (j >= amount && minCost[i][j] != INF) {
-						index = j;
-						if (i == V.length - 1)
-							return j;
-					}
-				}
-		}
+		minCost = new int[size + 1];
+		Arrays.fill(minCost, INF);
+		int index =  size;
+		minCost[0] = 0;
+		for (int i = 0; i < V.length; i++) 
+			for (int j = size-V[i]; j >= 0; j--) {
+				if (minCost[j] != INF) 
+					minCost[j + V[i]] = Math.min(minCost[j + V[i]], minCost[j]+1);
+				if (j+ V[i] >= amount && minCost[j+ V[i]] != INF) 
+					index = Math.min(j+ V[i],index);
+			}
 		return index;
 	}
 
@@ -59,14 +46,10 @@ public class _11517_Exact_Change {
 				}
 				Arrays.sort(V);
 				int index = fillMinCost(sum, amount);
-				out.append(index + " " + minCost[nCoins - 1][index] + "\n");
+				out.append(index + " " + minCost[index] + "\n");
 			}
 		}
 		System.out.print(out);
-	}
-
-	public static int min(int a, int b, int c) {
-		return Math.min(Math.min(a, b), c);
 	}
 
 }
