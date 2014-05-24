@@ -51,11 +51,4 @@ public class _167_The_Sultans_Successors {
 		return true;
 	}
 
-	public static int[] readInts(String line) {
-		String[] w = line.trim().split(" ");
-		int[] a = new int[w.length];
-		for (int i = 0; i < w.length; i++)
-			a[i] = Integer.parseInt(w[i].trim());
-		return a;
-	}
 }
