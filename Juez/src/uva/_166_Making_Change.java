@@ -11,14 +11,14 @@ public class _166_Making_Change {
 	public static final int V[] = { 1, 2, 4, 10, 20, 40 },
 			INF = Integer.MAX_VALUE / 2, MAX_CENTS = 2000;
 
-	public static int minCost[], c[];
+	public static int infCoin[], c[];
 
 	public static void fillMinCost(int size) {
-		minCost = new int[size + 1];
-		Arrays.fill(minCost, 1, size + 1, INF);
+		infCoin = new int[size + 1];
+		Arrays.fill(infCoin, 1, size + 1, INF);
 		for (int i = 0; i < V.length; i++)
-			for (int j = V[i]; j < minCost.length; j++)
-				minCost[j] = Math.min(minCost[j], minCost[j - V[i]] + 1);
+			for (int j = V[i]; j < infCoin.length; j++)
+				infCoin[j] = Math.min(infCoin[j], infCoin[j - V[i]] + 1);
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -44,16 +44,15 @@ public class _166_Making_Change {
 				for (int j = 0; j < amount[i]; j++)
 					c[pos++] = V[i];
 			int pay = (int) (Double.parseDouble(st.nextToken()) * 20);
-			int[] dp = new int[MAX_CENTS + 1];
-			Arrays.fill(dp, 1, MAX_CENTS + 1, INF);
-			//dp[c[0]] = 1;
+			int[] finiCoin = new int[MAX_CENTS + 1];
+			Arrays.fill(finiCoin, 1, MAX_CENTS + 1, INF);
 			for (int i = 0; i < c.length; i++)
 				for (int j = MAX_CENTS - c[i]; j >= 0; j--)
-					if (dp[j] != INF)
-						dp[j + c[i]] = Math.min(dp[j + c[i]], dp[j] + 1);
+					if (finiCoin[j] != INF)
+						finiCoin[j + c[i]] = Math.min(finiCoin[j + c[i]], finiCoin[j] + 1);
 			int ans = INF;
 			for (int i = pay; i <= MAX_CENTS; i++)
-				ans = Math.min(ans, dp[i] + minCost[i - pay]);
+				ans = Math.min(ans, finiCoin[i] + infCoin[i - pay]);
 			out.append(String.format("%3d", ans) + "\n");
 		}
 		System.out.print(out);
