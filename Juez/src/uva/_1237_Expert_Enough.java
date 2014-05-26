@@ -21,7 +21,6 @@ public class _1237_Expert_Enough {
 				c = new Company[nComp];
 				for (int j = 0; j < nComp; j++)
 					c[j] = new Company(in.readLine().trim());
-				Arrays.sort(c);
 				int nQueries = Integer.parseInt(in.readLine().trim()), q;
 				for (int j = 0; j < nQueries; j++) {
 					q = Integer.parseInt(in.readLine().trim());
@@ -44,7 +43,7 @@ public class _1237_Expert_Enough {
 		System.out.print(out);
 	}
 
-	public static class Company implements Comparable<Company> {
+	public static class Company {
 		String name;
 		int low, high;
 
@@ -53,11 +52,6 @@ public class _1237_Expert_Enough {
 			name = w[0];
 			low = Integer.parseInt(w[1]);
 			high = Integer.parseInt(w[2]);
-		}
-
-		@Override
-		public int compareTo(Company arg0) {
-			return this.low - arg0.low;
 		}
 	}
 }
