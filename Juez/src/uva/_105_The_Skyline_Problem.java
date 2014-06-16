@@ -10,7 +10,6 @@ public class _105_The_Skyline_Problem {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line = "";
 		StringBuilder out = new StringBuilder();
-		ArrayList<C> l = new ArrayList<C>(5001);
 		int[] h = new int[10001];
 		while ((line = in.readLine()) != null && line.length() != 0){
 			int[] info = readInts(line);
@@ -36,16 +35,5 @@ public class _105_The_Skyline_Problem {
 		for (int i = 0; i < w.length; i++)
 			a[i] = Integer.parseInt(w[i].trim());
 		return a;
-	}
-
-	static class C {
-		int x, h, w;
-
-		public C(int[] info) {
-			x = info[0];
-			h = info[1];
-			w = info[2];
-		}
-
 	}
 }
