@@ -74,8 +74,8 @@ public class _11512_GATTACA {
 	}
 
 	// sort rotations of S in O(n*log(n))
-	public static int[] rotationArray(CharSequence S) {
-		int n = S.length();
+	public static int[] rotationArray() {
+		int n = cad.length;
 		Integer[] order = new Integer[n];
 		for (int i = 0; i < n; i++)
 			order[i] = i;
@@ -84,7 +84,7 @@ public class _11512_GATTACA {
 		int[] classes = new int[n];
 		for (int i = 0; i < n; i++) {
 			sa[i] = order[i];
-			classes[i] = S.charAt(i);
+			classes[i] = cad[i];
 		}
 		for (int len = 1; len < n; len *= 2) {
 			int[] c = classes.clone();
@@ -106,7 +106,7 @@ public class _11512_GATTACA {
 	}
 
 	// longest common prefixes array in O(n)
-	public static int[] lcp(int[] sa, CharSequence s) {
+	public static int[] lcp(int[] sa) {
 		int n = sa.length;
 		int[] rank = new int[n];
 		for (int i = 0; i < n; i++)
@@ -114,8 +114,8 @@ public class _11512_GATTACA {
 		int[] lcp = new int[n - 1];
 		for (int i = 0, h = 0; i < n; i++) {
 			if (rank[i] < n - 1) {
-				for (int j = sa[rank[i] + 1]; Math.max(i, j) + h < s.length()
-						&& s.charAt(i + h) == s.charAt(j + h); ++h)
+				for (int j = sa[rank[i] + 1]; Math.max(i, j) + h < cad.length
+						&& cad[i + h] == cad[j + h]; ++h)
 					;
 				lcp[rank[i]] = h;
 				if (h > 0)
@@ -136,7 +136,7 @@ public class _11512_GATTACA {
 				cad = a.toCharArray();
 				comp = new theComparator(cad);
 				int[] sa = suffixArray();
-				int[] lcp = lcp(sa, a);
+				int[] lcp = lcp(sa);
 				int max = 0, times = 1, maxTimes = 0;
 				String strMax = "";
 				boolean add = false;
