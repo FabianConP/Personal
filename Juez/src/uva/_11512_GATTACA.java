@@ -137,20 +137,19 @@ public class _11512_GATTACA {
 				comp = new theComparator(cad);
 				int[] sa = suffixArray();
 				int[] lcp = lcp(sa);
-				int max = 0, times = 1, maxTimes = 0;
-				String strMax = "";
+				int max = 0, times = 0, maxTimes = 0, indStr = 0;
 				boolean add = false;
 				for (int i = 0; i < lcp.length; i++)
 					if (lcp[i] != 0 && max <= lcp[i]) {
 						if (max < lcp[i]) {
-							strMax = build(sa[i], sa[i] + lcp[i]);
+							indStr = sa[i];
 							maxTimes = times = 2;
 							add = true;
 						} else
 							times++;
 						max = lcp[i];
 						if (add)
-							maxTimes = Math.max(times, maxTimes);
+							maxTimes = times;
 					} else {
 						times = 1;
 						add = false;
@@ -158,7 +157,7 @@ public class _11512_GATTACA {
 				if (maxTimes < 2 || max == 0)
 					out.append("No repetitions found!\n");
 				else
-					out.append(strMax + " " + maxTimes + "\n");
+					out.append(build(indStr, indStr+max) + " " + maxTimes + "\n");
 			}
 		}
 		System.out.print(out);
