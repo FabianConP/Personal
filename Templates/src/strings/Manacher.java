@@ -17,10 +17,10 @@ public class Manacher {
 	 * Find the length of a max palindrome centered at any position O(n)
 	 */
 	
-	private int[] p; // p[i] = length of longest palindromic substring of t,
+	int[] p; // p[i] = length of longest palindromic substring of t,
 						// centered at i
-	private char[] s; // original string
-	private char[] t; // transformed string
+	char[] s; // original string
+	char[] t; // transformed string
 
 	public Manacher(String s) {
 		this.s = s.toCharArray();
