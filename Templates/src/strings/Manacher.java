@@ -29,8 +29,10 @@ public class Manacher {
 
 		int center = 0, right = 0;
 		for (int i = 1; i < t.length - 1; i++) {
-			int mirror = 2 * center - i;// equals to i' = center - (i-center)
+			// equals to i' = center - (i-center)
+			int mirror = 2 * center - i;
 
+			//Optimization of pre-calculated palindrome in @center
 			if (right > i)
 				p[i] = Math.min(right - i, p[mirror]);
 
