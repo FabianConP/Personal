@@ -11,7 +11,7 @@ public class _203_Potholers {
 		public static int INF = 200000000;
 		public int g[][];
 		public ArrayList<Integer>[] ady;
-		public int mf, f, s, t;// max flow, actually flow, source node,
+		public int mf, f, s;// max flow, actually flow, source node,
 								// finish node
 		public int V;// number of vertex
 		public int[] p;
@@ -38,6 +38,7 @@ public class _203_Potholers {
 
 		public int edmons_karp(int s, int t) {
 			int u, e;
+			this.s = s;
 			mf = 0;
 			Arrays.fill(p, -1);
 			while (true) {
