@@ -25,7 +25,6 @@ public class _11686_Pick_up_sticks {
 			size = n;
 			ady = new ArrayList[size + 1];
 			parents = new int[size + 1];
-			int id = 1;
 			for (int i = 0; i <= size; i++)
 				ady[i] = new ArrayList<Integer>(30);
 			int nRelations = m;
