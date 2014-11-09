@@ -13,7 +13,6 @@ public class _11060_Beverages {
 	public static int[] parents;
 	public static String[] map2;
 	public static int size;
-	public static boolean findAns;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
