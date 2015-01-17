@@ -2,30 +2,47 @@ package uva;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class _836_Largest_Submatrix {
 
-	static int dp[][], area;
-	static char[][] m;
+	public static char[][] m;
+	public static long area;
 
-	public static void clearDP(int r, int c, int size) {
-		dp[r][c] = m[r][c] - '0';
-		for (int i = r + 1; i < size; i++){
-			dp[i][c] = dp[i - 1][c] + m[i][c] - '0';
-			if(i-r+1==dp[i][c])
-				area = Math.max(area, dp[i][c]);
+	public static long kadane(long[] comp) {
+		long sum = 0, max = 0;
+		int startRow = 0;
+		for (int i = 0; i < m.length; i++) {
+			sum += comp[i];
+			if (sum != 0) {
+				sum = 0;
+				startRow = i + 1;
+			} else if (max < i - startRow + 1)
+				max = i - startRow + 1;
+			max = Math.max(max, comp[i] == 0 ? 1 : 0);
 		}
-		for (int j = c + 1; j < size; j++){
-			dp[r][j] = dp[r][j - 1] + m[r][j] - '0';
-			if(j-c+1==dp[r][j])
-				area = Math.max(area, dp[r][j]);
+		return max;
+	}
+
+	public static long getMaxRectangleSum() {
+		int ROWS = m.length, COLS = m[0].length;
+		long[] comp = new long[ROWS];
+		long maxArea = 0;
+		for (int left = 0; left < COLS; left++) {
+			Arrays.fill(comp, 0);
+			for (int right = left; right < COLS; right++) {
+				for (int r = 0; r < ROWS; r++)
+					comp[r] += (m[r][right] - '0') ^ 1;
+				long height = kadane(comp);
+				maxArea = Math.max(maxArea, height * (right - left + 1));
+			}
 		}
+		return maxArea;
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder out = new StringBuilder();
-		dp = new int[25][25];
 		int times = Integer.parseInt(in.readLine().trim());
 		for (int t = 0; t < times; t++) {
 			in.readLine();
@@ -35,21 +52,8 @@ public class _836_Largest_Submatrix {
 			m[0] = firstLine.toCharArray();
 			for (int j = 1; j < size; j++)
 				m[j] = in.readLine().trim().toCharArray();
-			area = 0;
-			for (int r = 0; r < size; r++) {
-				for (int c = 0; c < size; c++) {
-					area = Math.max(area, m[r][c]-'0');
-					clearDP(r, c, size);
-					for (int i = r + 1; i < size; i++) {
-						for (int j = c + 1; j < size; j++) {
-							dp[i][j] = dp[i - 1][j] + dp[i][j - 1] + -dp[i - 1][j - 1] + m[i][j] - '0';
-							if ((i-r + 1) * (j-c + 1) == dp[i][j])
-								area = Math.max(area, dp[i][j]);
-						}
-					}
-				}
-			}
-			if(t!=0)
+			area = getMaxRectangleSum();
+			if (t != 0)
 				out.append("\n");
 			out.append(area + "\n");
 		}
