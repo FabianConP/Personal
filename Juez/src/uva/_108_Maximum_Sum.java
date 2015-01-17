@@ -1,36 +1,65 @@
 package uva;
+
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class _108_Maximum_Sum {
 
-	public static long[][] dp = new long[101][101];
+	public static long[][] m;
+	public static int startRow, endRow, topRow, topCol, bottomRow, bottomCol;
 
-	public static void cleanDP(int size){
-		for (int i = 0; i < size; i++)
-			for (int j = 0; j < size; j++) 
-				dp[i][j] = 0;
+	public static long kadane(long[] comp) {
+		long sum = 0, max = Long.MIN_VALUE;
+		startRow = endRow = 0;
+		for (int i = 0; i < m.length; i++) {
+			sum += comp[i];
+			if (comp[i] + sum < 0) {
+				sum = 0;
+				startRow = i + 1;
+			} else if (max < sum) {
+				max = sum;
+				endRow = i;
+			}
+			max = Math.max(max, comp[i]);
+		}
+		return max;
 	}
-	
+
+	public static long getMaxRectangleSum() {
+		int ROWS = m.length, COLS = m[0].length;
+		long[] comp = new long[ROWS];
+		long maxSum = Long.MIN_VALUE;
+		topRow = topCol = bottomRow = bottomCol = 0;
+		for (int left = 0; left < COLS; left++) {
+			Arrays.fill(comp, 0);
+			for (int right = left; right < COLS; right++) {
+				for (int r = 0; r < ROWS; r++)
+					comp[r] += m[r][right];
+				long max = kadane(comp);
+				if (maxSum < max) {
+					maxSum = max;
+					topRow = startRow;
+					bottomRow = endRow;
+					topCol = left;
+					bottomCol = right;
+				}
+			}
+		}
+		return maxSum;
+	}
+
 	public static void main(String[] args) throws IOException {
 		StringBuilder out = new StringBuilder();
 		Scanner in = new Scanner(System.in);
-		while(in.hasNext()){
+		while (in.hasNext()) {
 			int size = in.nextInt();
-			long[][] m = new long[size + 1][size + 1];
+			m = new long[size][size];
 			long max = Long.MIN_VALUE;
-			for (int i = 1; i < m.length; i++) 
-				for (int j = 1; j < m.length; j++) 
+			for (int i = 0; i < m.length; i++)
+				for (int j = 0; j < m.length; j++)
 					m[i][j] = in.nextLong();
-			for (int sx = 1; sx <= size; sx++) 
-				for (int sy = 1; sy <= size; sy++) {
-					cleanDP(size+1);
-					for (int i = sx; i <= size; i++)
-						for (int j = sy; j <= size; j++) {
-							dp[i][j] = dp[i - 1][j] + dp[i][j - 1] + m[i][j]- dp[i - 1][j - 1];
-							max = Math.max(max, dp[i][j]);
-						}
-				}
+			max = getMaxRectangleSum();
 			out.append(max + "\n");
 		}
 		System.out.print(out);
