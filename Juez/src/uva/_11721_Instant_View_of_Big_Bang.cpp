@@ -71,7 +71,7 @@ int main(){
         int cycleCount = 0;
         for(int i = 1; i<=n; i++)
             if(cycle[i]){
-                printf("% d", i-1);
+                printf(" %d", i-1);
                 cycleCount++;
             }
         if(cycleCount==0)
