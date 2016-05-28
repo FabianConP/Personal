@@ -104,17 +104,6 @@ public class _10801_Lift_Hopping {
 								cost[i] * Math.abs(s[i][b] - s[i][a]), i, true);
 				}
 			}
-			for (int i = 0; i < s.length; i++) {
-				for (int a = 0; a < s[i].length; a++)
-					for (int j = i + 1; j < s.length; j++) {
-						if (ss[j][s[i][a]])
-							for (int b = 0; b < s[j].length; b++)
-								G.union(s[i][a],
-										s[j][b],
-										(cost[j] * Math.abs(s[j][b] - s[i][a])) + 60,
-										j, true);
-					}
-			}
 			if (G.dijkstra(0, nk[1]) == G.INF)
 				out.append("IMPOSSIBLE\n");
 			else
