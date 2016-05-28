@@ -43,29 +43,4 @@ public class _12195_Jingle_Composing {
 		System.out.print(out);
 	}
 
-	public static int[] readInts(String line) {
-		StringTokenizer st = new StringTokenizer(line.trim());
-		int a[] = new int[st.countTokens()], index = 0;
-		while (st.hasMoreTokens())
-			a[index++] = Integer.parseInt(st.nextToken());
-		return a;
-	}
-
-	public static long[] readLongs(String line) {
-		StringTokenizer st = new StringTokenizer(line.trim());
-		long a[] = new long[st.countTokens()];
-		int index = 0;
-		while (st.hasMoreTokens())
-			a[index++] = Long.parseLong(st.nextToken());
-		return a;
-	}
-
-	public static double[] readDoubles(String line) {
-		StringTokenizer st = new StringTokenizer(line.trim());
-		double a[] = new double[st.countTokens()];
-		int index = 0;
-		while (st.hasMoreTokens())
-			a[index++] = Double.parseDouble(st.nextToken());
-		return a;
-	}
 }
