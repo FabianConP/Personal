@@ -23,9 +23,6 @@ public class _833_Water_Falls {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File inputFile = new File("entrada");
-		if (inputFile.exists())
-			System.setIn(new FileInputStream(inputFile));
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder out = new StringBuilder();
 		int nCases = Integer.parseInt(in.readLine().trim());
