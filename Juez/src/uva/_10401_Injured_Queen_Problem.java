@@ -1,4 +1,5 @@
 package uva;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -19,7 +20,6 @@ public class _10401_Injured_Queen_Problem {
 			b = new boolean[n][n];
 			dp = new long[n][n];
 			col = new long[n];
-			boolean invalid = false;
 			for (int col = 0; col < l.length; col++) {
 				if (l[col] == '?')
 					continue;
@@ -32,7 +32,7 @@ public class _10401_Injured_Queen_Problem {
 				b[pos][col] = false;
 			}
 			long ans = 0;
-			for (int c = n - 1; c >= 0 && !invalid; c--) {
+			for (int c = n - 1; c >= 0; c--) {
 				for (int r = 0; r < n; r++) {
 					if (b[r][c])
 						continue;
