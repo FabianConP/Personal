@@ -1,7 +1,5 @@
 package uva;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -39,9 +37,6 @@ public class _11888_Abnormal_89s {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File inputFile = new File("entrada");
-		if (inputFile.exists())
-			System.setIn(new FileInputStream(inputFile));
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder out = new StringBuilder();
 		int nCases = Integer.parseInt(in.readLine().trim());
